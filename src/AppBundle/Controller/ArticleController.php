@@ -30,7 +30,7 @@ class ArticleController extends Controller
     }
 
      /**
-     * @Route("/show22/{id}", requirements={"id" = "\d+"})
+     * @Route("/show/{id}", requirements={"id" = "\d+"})
      */
     public function showAction($id)
     {
