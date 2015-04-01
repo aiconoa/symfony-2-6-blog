@@ -1,0 +1,11 @@
+<article>
+    {% if link is defined and link == true %}
+        <h1><a href="{{ path('app_article_show', {'id' : article.id}) }}">{{ article.title }}</a></h1>
+    {% else %}
+        <h1>{{ article.title }}</h1>
+    {% endif %}
+    <p>Ecrit le {{ article.createdOn | date('y/m/d h:m:s') }} par ...</p>
+    <p>{{ article.content }}</p>
+</article>
+
+

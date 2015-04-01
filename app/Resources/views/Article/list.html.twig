@@ -1,19 +1,15 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}AppBundle:Article:list{% endblock %}
+{% block title %}Tous les articles{% endblock %}
 
-{% block body %}
-
+{% block main %}
     <section>
     {% for  article in articles %}
-
-        <article>
-            <h1><a href="{{ path('app_article_show', {'id': article.id}) }}">{{ article.title }}</a></h1>
-            <p>Ecrit le {{ article.createdOn | date('y/m/d h:m:s') }} par ...</p>
-            <p>{{ article.content }}</p>
-        </article>
-
+        {% include '_partial/article-detail.html.twig' with {'link' : true} %}
     {% endfor %}
     </section>
+{% endblock %}
 
+{% block sidebar %}
+    {{ render(controller('AppBundle:Ad:ad', {'width':'300', 'height':'300', 'color' : 'FF0000'})) }}
 {% endblock %}
