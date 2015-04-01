@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\ArticleRepository")
@@ -18,6 +19,7 @@ class Article {
     private $id;
 
     /**
+     * @Assert\Length(min="3", minMessage="Too small !")
      * @ORM\Column(type="string", length=100)
      * @var String
      */

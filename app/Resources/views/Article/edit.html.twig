@@ -13,3 +13,8 @@
 {% block sidebar %}
 
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset("ckeditor/ckeditor.js") }}"></script>
+{% endblock %}

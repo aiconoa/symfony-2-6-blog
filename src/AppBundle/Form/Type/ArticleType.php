@@ -10,7 +10,7 @@ class ArticleType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', 'text')
-                ->add('content', 'textarea')
+                ->add('content', 'textarea', ['attr' => ['class' => "ckeditor"]])
                 ->add('save', 'submit');
     }
 
