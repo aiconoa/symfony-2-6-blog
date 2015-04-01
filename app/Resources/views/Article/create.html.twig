@@ -1,0 +1,15 @@
+{% extends "::base.html.twig" %}
+
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block title %}Créer un nouvel article{% endblock %}
+
+{% block main %}
+    <section>
+        {{ form(form) }}
+    </section>
+{% endblock %}
+
+{% block sidebar %}
+
+{% endblock %}

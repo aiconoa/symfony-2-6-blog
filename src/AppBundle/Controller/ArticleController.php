@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Article;
+use AppBundle\Form\Type\ArticleType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -75,6 +76,33 @@ class ArticleController extends Controller
         return $this->render('Article/show.html.twig',
             [
                 "article" => $article
+            ]
+        );
+    }
+
+    /**
+     * @Route("/create")
+     */
+    public function createAction(Request $request)
+    {
+        $article = new Article();
+        $form = $this->createForm(new ArticleType(), $article);
+
+        $form->handleRequest($request);
+
+        if($form->isValid()) {
+            $em = $this->getDoctrine()->getManagerForClass("AppBundle:Article");
+
+            $article->setCreatedOn(new \DateTime());
+            $em->persist($article);
+            $em->flush();
+
+            return $this->redirectToRoute('app_article_list');
+        }
+
+        return $this->render('Article/create.html.twig',
+            [
+                "form" => $form->createView()
             ]
         );
     }
