@@ -19,7 +19,8 @@ class ArticleController extends Controller
      */
     public function listAction()
     {
-        $articles = $this->buildFakeArticleList();
+        //$articles = $this->buildFakeArticleList();
+        $articles = $this->getDoctrine()->getRepository("AppBundle:Article")->findAll();
 
         // :Article:list.html.twig
         return $this->render('Article/list.html.twig',
@@ -34,7 +35,8 @@ class ArticleController extends Controller
      */
     public function showAction($id)
     {
-        $article = $this->findFakeArticleById($id);
+        // $article = $this->findFakeArticleById($id);
+        $article = $this->getDoctrine()->getRepository("AppBundle:Article")->find($id);
 
         if($article === null) {
             throw $this->createNotFoundException();

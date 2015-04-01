@@ -2,30 +2,43 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ */
 class Article {
 
     /**
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="integer")
      * @var int
      */
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=100)
      * @var String
      */
     private $title;
 
     /**
+     * @ORM\Column(type="text")
      * @var String
      */
     private $content;
 
     /**
+     * @ORM\Column(type="datetime")
      * @var DateTime
      */
     private $createdOn;
 
     /**
-     * @return int
+     * Get id
+     *
+     * @return integer 
      */
     public function getId()
     {
@@ -33,15 +46,22 @@ class Article {
     }
 
     /**
-     * @param int $id
+     * Set title
+     *
+     * @param string $title
+     * @return Article
      */
-    public function setId($id)
+    public function setTitle($title)
     {
-        $this->id = $id;
+        $this->title = $title;
+
+        return $this;
     }
 
     /**
-     * @return String
+     * Get title
+     *
+     * @return string 
      */
     public function getTitle()
     {
@@ -49,15 +69,22 @@ class Article {
     }
 
     /**
-     * @param String $title
+     * Set content
+     *
+     * @param string $content
+     * @return Article
      */
-    public function setTitle($title)
+    public function setContent($content)
     {
-        $this->title = $title;
+        $this->content = $content;
+
+        return $this;
     }
 
     /**
-     * @return String
+     * Get content
+     *
+     * @return string 
      */
     public function getContent()
     {
@@ -65,27 +92,25 @@ class Article {
     }
 
     /**
-     * @param String $content
+     * Set createdOn
+     *
+     * @param \DateTime $createdOn
+     * @return Article
      */
-    public function setContent($content)
+    public function setCreatedOn($createdOn)
     {
-        $this->content = $content;
+        $this->createdOn = $createdOn;
+
+        return $this;
     }
 
     /**
-     * @return DateTime
+     * Get createdOn
+     *
+     * @return \DateTime 
      */
     public function getCreatedOn()
     {
         return $this->createdOn;
     }
-
-    /**
-     * @param DateTime $createdOn
-     */
-    public function setCreatedOn($createdOn)
-    {
-        $this->createdOn = $createdOn;
-    }
-
 }
