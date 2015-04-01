@@ -1,0 +1,15 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:Article:list{% endblock %}
+
+{% block body %}
+
+    <section>
+        <article>
+            <h1>{{ article.title }}</h1>
+            <p>Ecrit le {{ article.createdOn | date('y/m/d h:m:s') }} par ...</p>
+            <p>{{ article.content }}</p>
+        </article>
+    </section>
+
+{% endblock %}
