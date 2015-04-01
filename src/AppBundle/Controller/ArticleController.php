@@ -108,6 +108,38 @@ class ArticleController extends Controller
     }
 
     /**
+     * @Route("/edit/{id}", requirements={"id" = "\d+"})
+     */
+    public function editAction(Request $request, $id)
+    {
+        $article = $this->getDoctrine()->getRepository("AppBundle:Article")->find($id);
+
+        if($article === null) {
+            throw $this->createNotFoundException();
+        }
+
+        $form = $this->createForm(new ArticleType(), $article);
+
+        $form->handleRequest($request);
+
+        if($form->isValid()) {
+            $em = $this->getDoctrine()->getManagerForClass("AppBundle:Article");
+            $em->persist($article);
+            $em->flush();
+
+            return $this->redirectToRoute('app_article_show', ['id' => $article->getId()]);
+        }
+
+        return $this->render('Article/edit.html.twig',
+            [
+                "form" => $form->createView(),
+                "article" => $article
+            ]
+        );
+
+    }
+
+    /**
      * @Route("/article-links")
      */
     public function articleLinksAction()
