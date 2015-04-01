@@ -6,6 +6,7 @@ use AppBundle\Entity\Article;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -14,18 +15,47 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ArticleController extends Controller
 {
+    const NB_ARTICLE_PER_PAGE = 2;
+
     /**
      * @Route("/list")
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
+        $page = $request->get('page', '1');
+
+        if(! ctype_digit($page)) {
+            throw $this->createNotFoundException();
+        }
+
+        $page = (int) $page;
+
+        if($page < 1) {
+            throw $this->createNotFoundException();
+        }
+
+        $repository = $this->getDoctrine()->getRepository("AppBundle:Article");
+        $totalArticles = $repository->count();
+        $pageMax = ceil($totalArticles / ArticleController::NB_ARTICLE_PER_PAGE);
+
+        if($page > $pageMax) {
+            throw $this->createNotFoundException();
+        }
+
+        $offset = ($page - 1) * ArticleController::NB_ARTICLE_PER_PAGE;
+
+        $articles = $repository->findAllWithOffsetAndLimitOrderedByCreatedOnDESC($offset,  ArticleController::NB_ARTICLE_PER_PAGE);
+
+
         //$articles = $this->buildFakeArticleList();
-        $articles = $this->getDoctrine()->getRepository("AppBundle:Article")->findAll();
+        //$articles = $this->getDoctrine()->getRepository("AppBundle:Article")->findAllOrderedByCreatedOnDESC();
 
         // :Article:list.html.twig
         return $this->render('Article/list.html.twig',
                             [
-                                "articles" => $articles
+                                "articles"  => $articles,
+                                "page"      => $page,
+                                "pageMax"   => $pageMax
                             ]
             );
     }

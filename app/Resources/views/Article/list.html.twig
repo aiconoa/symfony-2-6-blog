@@ -7,6 +7,12 @@
     {% for  article in articles %}
         {% include '_partial/article-detail.html.twig' with {'link' : true} %}
     {% endfor %}
+    {% if page > 1 %}
+        <a href="{{ path("app_article_list", {'page' : page - 1}) }}">Précédent</a>
+    {% endif %}
+    {% if page < pageMax %}
+        <a href="{{ path("app_article_list", {'page' : page + 1}) }}">Suivant</a>
+    {% endif %}
     </section>
 {% endblock %}
 
