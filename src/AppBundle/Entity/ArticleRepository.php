@@ -30,12 +30,12 @@ class ArticleRepository extends EntityRepository
 
     public function findAllWithOffsetAndLimitOrderedByCreatedOnDESC($offset, $limit)
     {
-//        $dqlQuery = "SELECT COUNT(a) FROM AppBundle\Entity\Article a ORDER BY a.createdOn DESC";
-//        $query = $this->getEntityManager()->createQuery($dqlQuery);
-//        $query->setFirstResult($offset);
-//        $query->setMaxResults($limit);
-//        return $query->getResult();
+        $dqlQuery = "SELECT a, au FROM AppBundle\Entity\Article a JOIN a.author au ORDER BY a.createdOn DESC";
+        $query = $this->getEntityManager()->createQuery($dqlQuery);
+        $query->setFirstResult($offset);
+        $query->setMaxResults($limit);
+        return $query->getResult();
 
-        return $this->findBy([], ["createdOn" => "DESC"],$limit, $offset);
+//        return $this->findBy([], ["createdOn" => "DESC"],$limit, $offset);
     }
 }

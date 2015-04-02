@@ -4,7 +4,7 @@
     {% else %}
         <h1>{{ article.title }}</h1>
     {% endif %}
-    <p>Ecrit le {{ article.createdOn | date('y/m/d h:m:s') }} par ...</p>
+    <p>Ecrit le {{ article.createdOn | date('y/m/d h:m:s') }} par {{ article.author.username }}</p>
     <p>{{ article.content | raw }}</p>
 </article>
 

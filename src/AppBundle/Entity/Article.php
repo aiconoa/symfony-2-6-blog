@@ -38,6 +38,14 @@ class Article {
     private $createdOn;
 
     /**
+     * @ORM\ManyToOne(targetEntity="\Aiconoa\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="author", referencedColumnName="id")
+     * @var \Aiconoa\UserBundle\Entity\User
+     */
+    private $author;
+
+
+    /**
      * Get id
      *
      * @return integer 
@@ -114,5 +122,28 @@ class Article {
     public function getCreatedOn()
     {
         return $this->createdOn;
+    }
+
+    /**
+     * Set author
+     *
+     * @param \Aiconoa\UserBundle\Entity\User $author
+     * @return Article
+     */
+    public function setAuthor(\Aiconoa\UserBundle\Entity\User $author = null)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * Get author
+     *
+     * @return \Aiconoa\UserBundle\Entity\User 
+     */
+    public function getAuthor()
+    {
+        return $this->author;
     }
 }
