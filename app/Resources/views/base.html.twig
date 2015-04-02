@@ -16,6 +16,13 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-xs-12">
+            <a href="{{ path('app_article_list') }}">Tous les articles</a> |
+            <a href="{{ path('app_article_create') }}">Créer un article</a> |
+            <a href="{{ path('aiconoa_statistics_default_index') }}">Stats</a>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-xs-12 col-md-8">
             {%  block main %}{% endblock %}
         </div>
