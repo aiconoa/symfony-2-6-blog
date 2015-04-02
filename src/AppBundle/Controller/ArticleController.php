@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @Route("/articles")
@@ -89,6 +90,12 @@ class ArticleController extends Controller
      */
     public function createAction(Request $request)
     {
+        $user = $this->getUser();
+
+        if($user == null) {
+                throw $this->createAccessDeniedException();
+        }
+
         $article = new Article();
         $form = $this->createForm(new ArticleType(), $article);
 
@@ -97,6 +104,7 @@ class ArticleController extends Controller
         if($form->isValid()) {
             $em = $this->getDoctrine()->getManagerForClass("AppBundle:Article");
 
+            $article->setAuthor($user);
             $article->setCreatedOn(new \DateTime());
             $em->persist($article);
             $em->flush();
@@ -120,6 +128,10 @@ class ArticleController extends Controller
 
         if($article === null) {
             throw $this->createNotFoundException();
+        }
+
+        if (false === $this->get('security.authorization_checker')->isGranted('edit', $article)) {
+            throw new AccessDeniedException('Unauthorised access!');
         }
 
         $form = $this->createForm(new ArticleType(), $article);

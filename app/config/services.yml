@@ -4,6 +4,11 @@ parameters:
 #    parameter_name: value
 
 services:
+    security.access.article_voter:
+        class:      AppBundle\Security\Authorization\Voter\ArticleVoter
+        public:     false
+        tags:
+           - { name: security.voter }
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
