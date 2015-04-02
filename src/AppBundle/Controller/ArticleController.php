@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Aiconoa\StatisticsBundle\Entity\Visit;
 use AppBundle\Entity\Article;
 use AppBundle\Form\Type\ArticleType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -64,8 +65,11 @@ class ArticleController extends Controller
      /**
      * @Route("/show/{id}", requirements={"id" = "\d+"})
      */
-    public function showAction($id)
+    public function showAction($id, Request $request)
     {
+
+        //$this->get('statService')->addVisit($request);
+
         // $article = $this->findFakeArticleById($id);
         $article = $this->getDoctrine()->getRepository("AppBundle:Article")->find($id);
 
@@ -124,7 +128,7 @@ class ArticleController extends Controller
 
         if($form->isValid()) {
             $em = $this->getDoctrine()->getManagerForClass("AppBundle:Article");
-            $em->persist($article);
+            $em->merge($article);
             $em->flush();
 
             return $this->redirectToRoute('app_article_show', ['id' => $article->getId()]);
